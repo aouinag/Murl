@@ -12,7 +12,7 @@ Voici des mots **très importants**, j'insiste !
 * Une autre puce
 * Et encore une autre puce !
 
-![Inspiration](media/inspiration.jpg)
+![Inspiration](http://i.imgur.com/H5IAQDd.jpg)
 
 Voila !
 
