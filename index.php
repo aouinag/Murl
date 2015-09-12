@@ -2,7 +2,7 @@
 
 // Variables and config
 $default_title = 'Murl';
-$theme = 'Speia';
+$theme = 'speia';
 $file_format = ".md"; 
 $core_dir = "core/"; 
 $content_dir = "content/";
