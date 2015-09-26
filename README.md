@@ -21,4 +21,4 @@ Markdown + URL = MURL !
 
 **Note :** This engine is not ready for production , if you found it useful you can help me to improve it !
 
-**MURL** is based on a code found on Github but i dont i don't remember the name . 
+**MURL** is based on [Singularity CMS](https://github.com/csu/singularity-cms) 
