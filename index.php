@@ -1,12 +1,12 @@
 <?php
 
 // Variables and config
-$default_title = 'Murl';
-$theme = 'speia';
+$site_name = 'Simple';
+$theme = '';
 $file_format = ".md"; 
 $core_dir = "core/"; 
 $content_dir = "content/";
-
+$siteroot = substr($_SERVER['PHP_SELF'], 0,  - strlen(basename($_SERVER['PHP_SELF']))); // Get site root and remove index.php
 
 define('ROOT_DIR', realpath(dirname(__FILE__)) .'/');
 define('CONTENT_DIR', ROOT_DIR .$content_dir); 
@@ -34,6 +34,7 @@ $parsedown = new Parsedown();
 $url = '';
 $request_url = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
 $script_url  = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : '';
+
 	
 // Get our url path and trim the / of the left and the right
 if($request_url != $script_url) $url = trim(preg_replace('/'. str_replace('/', '\/', str_replace('index.php', '', $script_url)) .'/', '', $request_url, 1), '/');
@@ -50,26 +51,28 @@ else $file .=  $file_format;
 if(file_exists($file)) $content = file_get_contents($file);
 else $content = file_get_contents($core_dir.'404' . $file_format);
 ?>
-
-
 <!DOCTYPE html>
 <html class="<?php echo $theme; ?>">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="<?php echo $core_dir.'style.css'; ?>">
+<meta name="viewport" content="width=device-width">
+<base href="<?php echo $siteroot; ?>">
+<link rel="stylesheet" type="text/css" href="style.css">
 
-<title><?php echo (ucwords(strtolower($url))) ? : $default_title; ?></title>
+<title><?php echo (ucwords(strtolower($url))) ? : $site_name; ?></title>
 </head>
 
 <header>
-<h2><?php echo $default_title; ?></h2>
+
+	<h2><?php echo $site_name; ?></h2>
 <nav>
   <a href="#">Home</a> 
-  <a href="#">Writing</a>
-  <a href="#">About</a>
-  <a href="#">Contact</a>
+  <a href="Readme">About</a>
+  <a href="mailto:mail@server.com">Contact</a>
 </nav>
 </header>
+
+<article>
 <?php 
 
 // Parse post
@@ -80,9 +83,8 @@ echo $parsedown->text($content);
 
 if (empty($url)){ P_list(); }
  ?>
+</article>
 
-<footer>
-<?php echo '&copy; '.$default_title; ?>
-</footer>
+<footer> © <?php echo date('Y') . " " . $site_name; ?></footer>
 
 </html>
