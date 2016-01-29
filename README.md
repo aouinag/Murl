@@ -15,14 +15,7 @@ Markdown + URL = MURL !
 * Enjoy !
 
 ## TO DO
-* Fix URL issue ( When you add a markdown file with space  like this 'Markdown file.md' you get an 404 error) 
-* Add date to posts
-* Fix tittle issue ( The engine use file name as a tittle ) 
-* Export to static HTML files
-
-## Development process
-
-[Trello](https://trello.com/b/5nw6IN1C/murl) 
+[ Get more info about development process on Trello](https://trello.com/b/5nw6IN1C/murl) 
 
 **Note :** This engine is not ready for production , if you found it useful you can help me to improve it !
 
