@@ -1,28 +1,37 @@
 <?php
 
 // Variables and config
-$site_name = 'Simple';
-$theme = '';
-$file_format = ".md"; 
-$core_dir = "core/"; 
-$content_dir = "content/";
-$siteroot = substr($_SERVER['PHP_SELF'], 0,  - strlen(basename($_SERVER['PHP_SELF']))); // Get site root and remove index.php
 
+$site_name = 'Simple';
+$theme = 'serif';
+$file_format = ".md";
+$core_dir = "core/";
+$content_dir = "content/";
+
+
+$siteroot = substr($_SERVER['PHP_SELF'], 0,  - strlen(basename($_SERVER['PHP_SELF']))); // Get site root and remove index.php
 define('ROOT_DIR', realpath(dirname(__FILE__)) .'/');
-define('CONTENT_DIR', ROOT_DIR .$content_dir); 
+define('CONTENT_DIR', ROOT_DIR .$content_dir);
 
 
 
 // Get post list
+
+
 function P_list()
 {
-global $content_dir, $file_format;
-$listes = glob($content_dir . "*" . $file_format);
-foreach($listes as $liste)
-{
-$link_address =basename($liste, $file_format);
-echo "<a href='$link_address'>$link_address</a>" . "</br>";
-}
+global $content_dir;
+
+$posts = fopen($content_dir.'posts.list',"r");
+
+while(! feof($posts))
+  {
+
+	foreach(fgetcsv($posts) as $liste)
+	{ $link_address=$liste; echo "<a href='$link_address'>".str_replace('-', ' ',$link_address)."</a>" . "</br>"; }
+	
+	}
+fclose($posts);	
 }
 
 
@@ -35,7 +44,7 @@ $url = '';
 $request_url = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
 $script_url  = (isset($_SERVER['PHP_SELF'])) ? $_SERVER['PHP_SELF'] : '';
 
-	
+
 // Get our url path and trim the / of the left and the right
 if($request_url != $script_url) $url = trim(preg_replace('/'. str_replace('/', '\/', str_replace('index.php', '', $script_url)) .'/', '', $request_url, 1), '/');
 
@@ -57,31 +66,33 @@ else $content = file_get_contents($core_dir.'404' . $file_format);
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <base href="<?php echo $siteroot; ?>">
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $core_dir; ?>style.css">
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif' rel='stylesheet' type='text/css'>
 
-<title><?php echo (ucwords(strtolower($url))) ? : $site_name; ?></title>
+<title><?php echo $site_name." - ".str_replace('-', ' ',$url)?></title>
 </head>
 
 <header>
 
 	<h2><?php echo $site_name; ?></h2>
 <nav>
-  <a href="#">Home</a> 
-  <a href="Readme">About</a>
+  <a href="#">Home</a>
+  <a href="About">About</a>
   <a href="mailto:mail@server.com">Contact</a>
 </nav>
 </header>
 
 <article>
-<?php 
+<?php
 
 // Parse post
-echo $parsedown->text($content);  
+echo $parsedown->text($content);
 
 
 // Show post list only in index
 
-if (empty($url)){ P_list(); }
+if (empty($url)){P_list();}
+
  ?>
 </article>
 
